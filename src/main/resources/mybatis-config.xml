@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--<properties resource="db.properties"/>-->
+    <!--mybatis 的设置选项，可以改变mybatis运行时行为-->
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <!--类型别名，仅用于xml配置，减少全限定名的书写-->
+    <!--
+    mybatis typeAlias配置的三种方式
+        方式一：
+        <typeAliases>
+            <typeAlias type="com.javen.pojo.User" alias="User"/>
+        </typeAliases>
+        方式二：
+        <typeAliases>
+            <package name="com.javen.pojo"/>
+        </typeAliases>
+        方式三：注解的方式，加在pojo上面
+        @Alias("User")
+    -->
+    <typeAliases>
+        <package name="com.javen.pojo"/>
+    </typeAliases>
+    <!--<environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${mysql.driver}"/>
+                <property name="url" value="${mysql.url}"/>
+                <property name="username" value="${mysql.username}"/>
+                <property name="password" value="${mysql.password}"/>
+            </dataSource>
+        </environment>
+    </environments>-->
+    <!--<mappers>
+        &lt;!&ndash;<mapper resource="UserMapper.xml"/>&ndash;&gt;
+        &lt;!&ndash;<mapper class="com.javen.mapper.UserMapper"/>&ndash;&gt;
+        <mapper resource="com.javen.mapper"/>
+    </mappers>-->
+</configuration>
