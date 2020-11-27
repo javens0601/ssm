@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--导入其他xml-->
+    <import resource="spring-ioc.xml"/>
+
+    <!--使用Spring中的容器来创建对象, 基于setter方法注入-->
+    <bean class="com.hangzhou.javen.User" id="user">
+        <property name="name" value="靳威"/>
+        <property name="address" value="礼泉县"/>
+        <property name="age" value="26"/>
+        <property name="birthday" value="20200107"/>
+    </bean>
+    <bean id="student" class="com.hangzhou.javen.Student">
+        <property name="partner" value="小王"/>
+    </bean>
+    <bean id="teacher" class="com.hangzhou.javen.Teacher"/>
+
+    <!--设置别名-->
+    <alias name="user" alias="user2"/>
+
+    <!--基于构造函数的依赖注入-->
+    <bean class="com.hangzhou.javen.User" id="user3">
+        <constructor-arg name="name" value="刘鹤"/>
+        <constructor-arg name="address" value="hangzhou"/>
+        <constructor-arg name="age" value="18"/>
+        <constructor-arg name="birthday" value="19950601"/>
+    </bean>
+
+</beans>

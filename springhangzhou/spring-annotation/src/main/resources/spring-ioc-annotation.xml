@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!--设置需要扫描的包-->
+    <!--排除扫描-->
+    <context:component-scan base-package="com.javen" ><!--use-default-filters="false">-->
+        <!--排除扫描-->
+        <!--根据注解的完整限定名排除-->
+        <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        &lt;!&ndash;根据类的完整限定名&ndash;&gt;
+        <context:exclude-filter type="assignable" expression="com.javen.controller.UserController"/>-->
+        <!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+    </context:component-scan>
+
+    <!--加载外部属性资源文件, 可以通过@Value 获取属性-->
+    <context:property-placeholder location="db.properties" />
+</beans>

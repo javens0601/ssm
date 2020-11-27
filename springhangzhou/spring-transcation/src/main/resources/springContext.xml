@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       https://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd"
+>
+
+    <!--开启注解扫描-->
+    <context:component-scan base-package="com.javen"/>
+
+    <!--开启AOP支持-->
+    <aop:aspectj-autoproxy/>
+
+    <!--扫描本地配置文件-->
+    <context:property-placeholder location="db.properties"/>
+
+    <!--配置第三方bean-->
+    <bean class="com.alibaba.druid.pool.DruidDataSource" id="druidDataSource">
+        <property name="username" value="${mysql.username}"/>
+        <property name="password" value="${mysql.passwd}"/>
+        <property name="url" value="${mysql.url}"/>
+        <property name="driverClassName" value="${mysql.driverClassName}"/>
+        <property name="initialSize" value="${mysql.initialSize}"/>
+    </bean>
+
+    <!--配置jdbc连接-->
+    <bean class="org.springframework.jdbc.core.JdbcTemplate" id="jdbcTemplate">
+        <property name="dataSource" ref="druidDataSource"/>
+    </bean>
+
+    <!--配置事务管理器-->
+    <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
+        <property name="dataSource" ref="druidDataSource"/>
+    </bean>
+
+    <!--基于注解的事务，开启事务的注解驱动-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--声明事务切入的所有方法-->
+    <aop:config>
+        <aop:pointcut id="transactionCut" expression="execution(* com.javen.dao..*.*(..))"/>
+    </aop:config>
+
+    <!--用来明确切点匹配到的哪些方法需要使用事务-->
+    <tx:advice>
+        <tx:attributes>
+            <tx:method name="add*"/>
+            <tx:method name="query*" isolation="READ_COMMITTED" read-only="true" propagation="SUPPORTS"/>
+        </tx:attributes>
+    </tx:advice>
+
+</beans>

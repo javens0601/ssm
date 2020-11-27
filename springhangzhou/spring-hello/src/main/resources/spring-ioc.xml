@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean class="com.hangzhou.javen.Person" id="person" init-method="initByConfig" destroy-method="destroyByConfig">
+        <property name="name" value="Javen"/>
+        <property name="eender" value=""/>
+        <property name="wife" ref="wife"/>
+        <property name="hobbies">
+            <list>
+                <value>sing</value>
+                <value>dancing</value>
+            </list>
+        </property>
+        <property name="course">
+            <map>
+                <entry key="1" value="java"></entry>
+                <entry key="2" value="C++"></entry>
+                <entry key="3" value="go"></entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean class="com.hangzhou.javen.Wife" id="wife" p:name="liuhe2" p:age="25" scope="prototype" autowire="byName" primary="true" autowire-candidate="default">
+        <constructor-arg name="name" value="liuhe"/>
+        <constructor-arg name="age" value="24"/>
+    </bean>
+
+
+    <!--配置第三方的bean-->
+    <bean class="com.alibaba.druid.pool.DruidDataSource" id="dataSource">
+        <property name="name" value="root"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,30 @@
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <!--
+    使用命令行的方式生成代码
+    java -jar mybatis-generator-core-x.x.x.jar -configfile \temp\generatorConfig.xml -overwrite
+    -->
+    <classPathEntry location="C:\Users\javen\.m2\repository\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar"/>
+    <context id="simple" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/test"
+                        userId="javen"
+                        password="jinwei"
+        />
+
+        <!--pojo-->
+        <javaModelGenerator targetPackage="com.javen.pojo" targetProject="src/main/java"/>
+        <!--mapper xml映射文件-->
+        <sqlMapGenerator targetPackage="com.javen.mapper" targetProject="src/main/resources">
+
+        </sqlMapGenerator>
+        <!--mapper 接口-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.javen.mapper" targetProject="src/main/java"/>
+
+        <!--配置哪些表需要生成代码-->
+        <table tableName="user" domainObjectName="User" mapperName="UserMapper"/>
+    </context>
+</generatorConfiguration>
