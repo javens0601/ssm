@@ -12,3 +12,8 @@
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>
+
+<!--
+设置logback配置文件的路径
+-Dlogback.configurationFile=logback.xml
+-->
