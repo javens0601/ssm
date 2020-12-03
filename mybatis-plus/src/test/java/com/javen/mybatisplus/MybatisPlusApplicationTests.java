@@ -6,7 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class MybatisPlusApplicationTests {
@@ -50,6 +53,25 @@ class MybatisPlusApplicationTests {
 		user.setName("liuhe");
 		int i = userMapper.updateById(user);
 		System.out.println(userMapper.selectById(8L));
+	}
+
+	/**
+	 * 查询多条数据
+	 */
+	@Test
+	public void testSelectBatch() {
+		List<User> users = userMapper.selectBatchIds(Arrays.asList("1", "2", "3"));
+		users.forEach(System.out::println);
+	}
+
+	/**
+	 * 按条件查询
+	 */
+	@Test
+	public void testSelectbyMap() {
+		Map<String, Object> userMap = new HashMap<>();
+		userMap.put("id", 8);
+		System.out.println(userMapper.selectByMap(userMap));
 	}
 
 }
