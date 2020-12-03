@@ -39,4 +39,17 @@ class MybatisPlusApplicationTests {
 		System.out.println(user);
 	}
 
+	/**
+	 * 测试乐观锁
+	 */
+	@Test
+	public void testOptimisticLocker() {
+		//查询用户
+		User user = userMapper.selectById(8L);
+		//修改用户信息
+		user.setName("liuhe");
+		int i = userMapper.updateById(user);
+		System.out.println(userMapper.selectById(8L));
+	}
+
 }
