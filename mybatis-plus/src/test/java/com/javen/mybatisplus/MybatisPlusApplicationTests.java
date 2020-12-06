@@ -1,10 +1,14 @@
 package com.javen.mybatisplus;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.javen.beans.User;
 import com.javen.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
+import org.springframework.aop.interceptor.PerformanceMonitorInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -72,6 +76,16 @@ class MybatisPlusApplicationTests {
 		Map<String, Object> userMap = new HashMap<>();
 		userMap.put("id", 8);
 		System.out.println(userMapper.selectByMap(userMap));
+	}
+
+	/**
+	 * 测试分页查询
+	 */
+	@Test
+	public void testSelectByPage() {
+		Page<User> page = new Page<>(1,5);
+		userMapper.selectPage(page, null);
+		page.getRecords().forEach(System.out::println);
 	}
 
 }

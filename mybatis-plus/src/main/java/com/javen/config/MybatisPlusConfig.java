@@ -2,6 +2,7 @@ package com.javen.config;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,5 +29,11 @@ public class MybatisPlusConfig {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
         interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
         return interceptor;
+    }
+
+    @Bean
+    public PaginationInnerInterceptor paginationInnerInterceptor() {
+        PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor();
+        return paginationInnerInterceptor;
     }
 }
