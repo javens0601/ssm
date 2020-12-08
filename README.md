@@ -8,3 +8,6 @@ SSM整合练习
 
 # mybatis-plus
 mybatis-plus 入门练习
+
+#new jdk practice
+jdk8 新特性练习
