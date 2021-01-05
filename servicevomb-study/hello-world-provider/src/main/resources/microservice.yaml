@@ -2,6 +2,8 @@ APPLICATION_ID: helloworlddemo
 service_description:
   name: demo-provider
   version: 1.0.0
+  properties:
+    allowCrossApp: true #若要开启跨应用调用，首先需在provider端的microservice.yaml文件开启跨应用调用配置
 servicecomb:
   rest:
     address: 0.0.0.0:9000

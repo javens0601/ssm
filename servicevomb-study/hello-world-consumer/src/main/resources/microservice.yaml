@@ -8,3 +8,5 @@ servicecomb:
   service:
     registry:
       address: http://127.0.0.1:30100   #本地注册中心的地址
+
+#Consumer端指定微服务名称调用provider的时候，需要加上provider所属的应用ID，格式由[microserviceName]变为[appID]:[microserviceName]。
