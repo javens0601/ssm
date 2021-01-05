@@ -18,6 +18,7 @@ LENGTH=`expr ${#NEXUS_GROUP_DOWNLOAD} + 1`
 function downloadJar() {
 	#输入jar的url
 	#curl -sO $1
+	#如果需要密码的话 curl -u username:passwd -sO $1
 	printLog "下载jar 方法: "$1
 	mkdirJarDir $1
 	curl -sO $1
