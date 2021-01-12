@@ -1,12 +1,12 @@
+[TOC]
+
 ## ansible学习笔记
 
-#### ansible 介绍
+### ansible 介绍
 
-#### ansible 特点
+### ansible 架构原理
 
-#### ansible 架构原理
-
-#### ansible 安装
+### ansible 安装
 
 > yum 安装
 >
@@ -25,7 +25,7 @@
 >   ansible --version
 >   ```
 
-#### ansible 配置文件
+### ansible 配置文件
 
 > /etc/ansible/ansible.cfg
 >
@@ -34,48 +34,87 @@
 >
 > /etc/ansible/hosts
 
-#### ansible 基本命令
+### ansible 命令
 
-* ansible 
+#### ansible 常见命令
 
-  * ping 模块
+- ansible                     # 执行ansible单条命令
 
-    - `ansible servername -m ping -u username -k`
+- ansible-doc             # 查看ansible 模块说明
 
-  * command 模块
+- ansible-galaxy        # 连接https://galaxy.ansible.com/ 下载响应的roles
 
-    * `ansible 192.168.222.131 -m command -a 'ls /'`
-    * `ansible  192.168.222.131 -a 'ls /'`     默认为command 模块，可以忽略。
+  ```shell
+  #列出所有已经安装的 galaxy
+  ansible-galaxy list
+  #安装galaxy
+  ansible-galaxy install andrewrothstein.etcd
+  ansible-galaxy install geerlingguy.jenkins
+  #删除galaxy
+  ansible-galaxy remove andrewrothstein.etcd
+  
+  ```
 
-  * shell 模块
+- ansible-pull           #推送命令至远程
 
-    * `ansible 192.168.222.131 -m shell -a 'ls /'`
+- ansible-playbook  #
 
-    > 有很多情况下，command 模块不支持了，就需要使用shell模块，如下面的情况：
-    >
-    > <u>___下面的输出是将单引号里面的内容原样输出了___</u>
-    >
-    > ```shell
-    > ansible 192.168* -a 'echo 123 | grep 3'
-    > 输出：
-    > 192.168.222.131 | CHANGED | rc=0 >>
-    > 123 | grep 3
-    > ```
-    >
-    > <u>___下面是使用shell模块的效果___</u>
-    >
-    > ```shell
-    > ansible 192.168* -m  shell -a 'echo 123 | grep 3'
-    > 输出：
-    > 192.168.222.131 | CHANGED | rc=0 >>
-    > 123
-    > ```
+- ansible-vault          #管理加密解密yml文件
 
-  * script 模块
+- ansibl-console        #执行交互式命令的界面
 
-    - `ansible  192.168.* -m script -a 'host.sh args'`
+#### ansible 常见模块
 
-* ansible-doc
+* ping 模块
+
+  - `ansible servername -m ping -u username -k`
+
+* command 模块
+
+  * `ansible 192.168.* -m command -a 'ls /'`
+  * `ansible  192.168.* -a 'ls /'`     默认为command 模块，可以忽略。
+
+* shell 模块
+
+  * `ansible 192.168.* -m shell -a 'ls /'`
+
+  > 有很多情况下，command 模块不支持了，就需要使用shell模块，如下面的情况：
+  >
+  > <u>___下面的输出是将单引号里面的内容原样输出了___</u>
+  >
+  > ```shell
+  > ansible 192.168* -a 'echo 123 | grep 3'
+  > 输出：
+  > 192.168.xxx.xxx | CHANGED | rc=0 >>
+  > 123 | grep 3
+  > ```
+  >
+  > <u>___下面是使用shell模块的效果___</u>
+  >
+  > ```shell
+  > ansible 192.168* -m  shell -a 'echo 123 | grep 3'
+  > 输出：
+  > 192.168.xxx.xxx | CHANGED | rc=0 >>
+  > 123
+  > ```
+
+* script 模块
+
+  - `ansible  192.168.* -m script -a 'host.sh args'`
+
+* copy 模块
+
+  * 将主控机的文件拷贝到受控机
+
+    `ansible ubuntu -m copy -a 'src=/etc/ansible/shell dest=~/ansible/tmp/'`
+
+* fetch 模块
+
+  * 将受控机的文件拷贝到主控机
+
+    `ansible ubuntu -m fetch -a 'src=~/.ansible/tmp/test/hello.txt dest=~/.ansible/'`
+
+* file 模块
 
 #### ansible命令执行过程
 
@@ -94,15 +133,25 @@ remote server -> remote server : 删除临时文件
 
 ```
 
-
-
 #### ansible 远程调试
 
 > ansible默认在执行完modules，会自动清理在远程主机上的临时文件。
 >  使用 ___`ANSIBLE_KEEP_REMOTE_FILES=1`___ 环境变量 ，可以保留ansible在远程主机的执行文件，从而在远程主机上调试模块。
 
-#### 其他系统设置
+### ansible playbook
 
+### 其他系统设置
+
+#### seLinux 设置
+
+> ##### seLinux：
+>
+> ```text
+>  SELinux(Security-Enhanced Linux) 是美国国家安全局NSA对于强制访问控制的实现，是 Linux历史上最杰出的新安全子系统。NSA是在Linux社区的帮助下开发了一种访问控制体系，在这种访问控制体系的限制下，进程只能访问那些在他的任务中所需要文件。SELinux 默认安装在 Fedora 和 Red Hat Enterprise Linux 上，也可以作为其他发行版上容易安装的包得到。
+> ```
+>
+> ---
+>
 > ##### 查看SELinux状态：
 >
 > 1、/usr/sbin/sestatus -v      #如果SELinux status参数为enabled即为开启状态
@@ -131,11 +180,12 @@ remote server -> remote server : 删除临时文件
 >
 > ---
 >
-> ##### 建立互信
->
+
+#### 服务器建立互信
+
 > ssh-keygen
 >
-> ssh-copy-id 10.1.20.114     
+> ssh-copy-id 10.1.xx.xxx     
 
 
 
