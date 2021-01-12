@@ -30,7 +30,7 @@ public class WebConfig implements WebMvcConfigurer {
     //增加jsp
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("login");
+        registry.addViewController("/").setViewName("redirect:/login");
     }
 
 
