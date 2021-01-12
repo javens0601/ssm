@@ -140,6 +140,17 @@ remote server -> remote server : 删除临时文件
 
 ### ansible playbook
 
+- playbook 核心元素
+hosts 执行的远程主机列表
+tasks 任务集
+varniables 内置变量或者自定义变量在playbook中调用
+templates 模板，可替换模板文件中的变量并实现一些简单逻辑的文件
+handlers 和 notify结合使用，由特定条件触发，满足条件才执行，否则不执行
+tags 标签，指定某条任务执行，用于选择playbook中的部分代码，ansible具有幂等性，因此会自动跳过没有变化的部分，即便如此，有些代码为了测试其确实没有发生变化的时间很长。此时，如果确定没有变化，就可以通过tags跳过这些代码片段
+ansible-playbook -t tagsname useradd.yml
+
+
+
 ### 其他系统设置
 
 #### seLinux 设置
