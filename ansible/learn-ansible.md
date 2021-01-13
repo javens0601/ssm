@@ -4,7 +4,13 @@
 
 ### ansible 介绍
 
+```tex
+Ansible是一种开源软件配置，配置管理和应用程序部署工具，可将基础结构作为代码启用。它可以在许多类Unix系统上运行，并且可以配置类Unix系统和Microsoft Windows。它包含自己的声明性语言来描述系统配置。
+```
+
 ### ansible 架构原理
+
+
 
 ### ansible 安装
 
@@ -38,7 +44,7 @@
 
 #### ansible 常见命令
 
-- ansible                     # 执行ansible单条命令
+- ansible                     # 执行ansible单条命令,ansible称这种方式为临时命令(Ansible Ad-Hoc)。
 
 - ansible-doc             # 查看ansible 模块说明
 
@@ -116,6 +122,8 @@
 
 * file 模块
 
+* setup 模块
+
 #### ansible命令执行过程
 
 ``` sequence
@@ -135,21 +143,25 @@ remote server -> remote server : 删除临时文件
 
 #### ansible 远程调试
 
-> ansible默认在执行完modules，会自动清理在远程主机上的临时文件。
->  使用 ___`ANSIBLE_KEEP_REMOTE_FILES=1`___ 环境变量 ，可以保留ansible在远程主机的执行文件，从而在远程主机上调试模块。
+> - ansible默认在执行完modules，会自动清理在远程主机上的临时文件。
+>   使用 ___`ANSIBLE_KEEP_REMOTE_FILES=1`___ 环境变量 ，可以保留ansible在远程主机的执行文件，从而在远程主机上调试模块。
+>
+> - 使用 -v、-vv、-vvv 可以查看ansible执行的详细日志
 
 ### ansible playbook
 
-- playbook 核心元素
-hosts 执行的远程主机列表
-tasks 任务集
-varniables 内置变量或者自定义变量在playbook中调用
-templates 模板，可替换模板文件中的变量并实现一些简单逻辑的文件
-handlers 和 notify结合使用，由特定条件触发，满足条件才执行，否则不执行
-tags 标签，指定某条任务执行，用于选择playbook中的部分代码，ansible具有幂等性，因此会自动跳过没有变化的部分，即便如此，有些代码为了测试其确实没有发生变化的时间很长。此时，如果确定没有变化，就可以通过tags跳过这些代码片段
-ansible-playbook -t tagsname useradd.yml
+> ##### playbook 核心元素
+> - hosts 执行的远程主机列表
+> - tasks 任务集
+> - varniables 内置变量或者自定义变量在playbook中调用
+> - templates 模板，可替换模板文件中的变量并实现一些简单逻辑的文件
+> - handlers 和 notify结合使用，由特定条件触发，满足条件才执行，否则不执行
+> - tags 标签，指定某条任务执行，用于选择playbook中的部分代码，ansible具有幂等性，因此会自动跳过没有变化的部分，即便如此，有些代码为了测试其确实没有发生变化的时间很长。此时，如果确定没有变化，就可以通过tags跳过这些代码片段
+>   `ansible-playbook -t tagsname useradd.yml`
 
+### templates 模板
 
+> jinja2语言
 
 ### 其他系统设置
 
@@ -198,5 +210,22 @@ ansible-playbook -t tagsname useradd.yml
 >
 > ssh-copy-id 10.1.xx.xxx     
 
+### others
 
+- jenkins下载慢的问题
+
+  ```shell
+  $ wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+  $ vi /etc/yum.repos.d/jenkins.repo
+  
+  [jenkins]
+  name=Jenkins-stable
+  baseurl=https://mirrors.huaweicloud.com/jenkins/redhat-stable
+  gpgcheck=1
+  ```
+
+- 安装redis
+  - ansible-galaxy install davidwittman.redis
+  - 编写playbook
+  - 执行playbook 安装redis
 
