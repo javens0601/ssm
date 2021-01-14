@@ -4,11 +4,18 @@
 
 ### ansible ½éÉÜ
 
-```tex
 AnsibleÊÇÒ»ÖÖ¿ªÔ´Èí¼þÅäÖÃ£¬ÅäÖÃ¹ÜÀíºÍÓ¦ÓÃ³ÌÐò²¿Êð¹¤¾ß£¬¿É½«»ù´¡½á¹¹×÷Îª´úÂëÆôÓÃ¡£Ëü¿ÉÒÔÔÚÐí¶àÀàUnixÏµÍ³ÉÏÔËÐÐ£¬²¢ÇÒ¿ÉÒÔÅäÖÃÀàUnixÏµÍ³ºÍMicrosoft Windows¡£Ëü°üº¬×Ô¼ºµÄÉùÃ÷ÐÔÓïÑÔÀ´ÃèÊöÏµÍ³ÅäÖÃ¡£
-```
+
+**ÌØµã:**
+
+- ÇáÁ¿¼¶£¬ÎÞÐè°²×°Agent
+- ÃüÁî¿Éµ¥ÌõÖ´ÐÐ£¬¿É±àÐ´³É¾ç±¾£¬Ö§³ÖÌõ¼þÅÐ¶Ï¡¢Ñ­»·
+- u»ùÓÚSSH£¬Kerberos£¬LDAPµÈÐ­Òé¹¤×÷
+- »ùÓÚpython¿ª·¢£¬¼òµ¥Ò×Î¬»¤
 
 ### ansible ¼Ü¹¹Ô­Àí
+
+![arch](arch.png)
 
 
 
@@ -30,25 +37,49 @@ AnsibleÊÇÒ»ÖÖ¿ªÔ´Èí¼þÅäÖÃ£¬ÅäÖÃ¹ÜÀíºÍÓ¦ÓÃ³ÌÐò²¿Êð¹¤¾ß£¬¿É½«»ù´¡½á¹¹×÷Îª´úÂëÆôÓÃ¡
 >   yum -y install ansible
 >   ansible --version
 >   ```
+>
+> - Ô´Âë°²×°
+>
+> - pip°²×°
 
 ### ansible ÅäÖÃÎÄ¼þ
 
-> /etc/ansible/ansible.cfg
+> /etc/ansible/ansible.cfg      #ÅäÖÃÎÄ¼þ
 >
 > - host_key_checking	ssh¼ì²é
 > - log_path		ÈÕÖ¾¼ÇÂ¼
 >
-> /etc/ansible/hosts
+> /etc/ansible/hosts               #Ä¬ÈÏÖ÷»úÇåµ¥£¬¿ÉÒÔÐÞ¸Ä£¬ÔÚÖ´ÐÐplaybookµÄÊ±ºò¿ÉÒÔÍ¨¹ý  -i  ²ÎÊýÖ¸¶¨Ö÷»úÇåµ¥
+>
+> - ¿ÉÒÔÉèÖÃ×é
+>
+>   [webserver]
+>
+>   192.168.1.100
+>
+>   192.168.1.101
+>
+> - ¶¨Òå±äÁ¿
+>
+>   [webserver]
+>
+>   192.168.1.100      ansible_port=80    ansible_user=javen
+>
+>   192.168.1.101      ansible_port=81
+>
+> - Ö§³ÖÄ£Ê½Æ¥Åä
+>
+>   ÔÚÊ¹ÓÃ ½Å±¾µÄÊ±ºò:  ansible __web*__ -m ping
 
 ### ansible ÃüÁî
 
-#### ansible ³£¼ûÃüÁî
+#### ansible ÃüÁî
 
 - ansible                     # Ö´ÐÐansibleµ¥ÌõÃüÁî,ansible³ÆÕâÖÖ·½Ê½ÎªÁÙÊ±ÃüÁî(Ansible Ad-Hoc)¡£
 
 - ansible-doc             # ²é¿´ansible Ä£¿éËµÃ÷
 
-- ansible-galaxy        # Á¬½Óhttps://galaxy.ansible.com/ ÏÂÔØÏìÓ¦µÄroles
+- ansible-galaxy        # Á¬½Óhttps://galaxy.ansible.com/ ÏÂÔØÏàÓ¦µÄroles
 
   ```shell
   #ÁÐ³öËùÓÐÒÑ¾­°²×°µÄ galaxy
@@ -134,6 +165,8 @@ ansible -> ansible : ¼ÓÔØ×Ô¼ºµÄÅäÖÃÎÄ¼þ\n£¨/etc/ansible/ansible.cfg£©
 ansible -> ansible : ¼ÓÔØ×Ô¼ºµÄÄ£¿éÎÄ¼þ\n(Èç ping¡¢ command)
 ansible -> ansible : Éú³ÉÁÙÊ±pyÎÄ¼þ\n(~/.ansible/tmp/)
 ansible -> remote server : ½«py´«ÊäÖÁÔ¶³ÌÊÜ¿Ø»ú(~/.ansible/tmp)
+#Note right of remote server : ansibleÖ§³ÖÅúÁ¿µÄ²Ù×÷\nÕâÀïµÄremote server¿ÉÒÔÊÇ¶àÌ¨Ö÷»ú
+Note over remote server : ansibleÖ§³ÖÅúÁ¿µÄ²Ù×÷\nÕâÀïµÄremote server¿ÉÒÔÊÇ¶àÌ¨Ö÷»ú
 remote server -> remote server : ¸øÎÄ¼þÔö¼ÓÖ´ÐÐÈ¨ÏÞ,²¢Ö´ÐÐ (+x)
 remote server --> ansible :·µ»ØÖ´ÐÐ½á¹û
 remote server -> remote server : É¾³ýÁÙÊ±ÎÄ¼þ
@@ -162,6 +195,49 @@ remote server -> remote server : É¾³ýÁÙÊ±ÎÄ¼þ
 ### templates Ä£°å
 
 > jinja2ÓïÑÔ
+
+### role ½éÉÜ
+
+> ÏÂÔØrole£ºÍ¨¹ýÔÚ[ansible-galaxy](https://galaxy.ansible.com/home)µÄÍøÕ¾ÉÏÃæËÑË÷ÏÂÔØ×Ô¼ºÐèÒªµÄrole¡£
+>
+> ```shell
+> geerlingguy.jenkins   	#Ã¿Ò»¸öÎÄ¼þ¼Ð¾ÍÊÇÒ»¸örole
+> ©À©¤©¤ defaults			#Éè¶¨Ä¬ÈÏ±äÁ¿Ê±Ê¹ÓÃ´ËÄ¿Â¼ÖÐµÄmain.yml
+> ©¦   ©¸©¤©¤ main.yml
+> ©À©¤©¤ handlers			#ÖÁÉÙÓÐÒ»¸ömain.yml£¬ÆäËûÎÄ¼þÍ¨¹ýinclude°üº¬
+> ©¦   ©¸©¤©¤ main.yml
+> ©À©¤©¤ LICENSE
+> ©À©¤©¤ meta			#ÖÁÉÙÓÐÒ»¸ömain.yml£¬ÆäËûÎÄ¼þÍ¨¹ýinclude°üº¬£¬¶¨Òåµ±Ç°½ÇÉ«µÄÌØÊâÉè¶¨¼°ÒÀÀµ¹ØÏµ
+> ©¦   ©¸©¤©¤ main.yml
+> ©À©¤©¤ molecule
+> ©¦   ©¸©¤©¤ default
+> ©¦       ©À©¤©¤ converge.yml
+> ©¦       ©À©¤©¤ java-11.yml
+> ©¦       ©À©¤©¤ java-8.yml
+> ©¦       ©À©¤©¤ molecule.yml
+> ©¦       ©À©¤©¤ playbook-http-port.yml
+> ©¦       ©À©¤©¤ playbook-jenkins-version.yml
+> ©¦       ©À©¤©¤ playbook-plugins-with-home.yml
+> ©¦       ©À©¤©¤ playbook-prefix.yml
+> ©¦       ©¸©¤©¤ requirements.yml
+> ©À©¤©¤ README.md
+> ©À©¤©¤ tasks			#ÖÁÉÙÓÐÒ»¸ömain.yml£¬ÆäËûÎÄ¼þÍ¨¹ýinclude°üº¬,¶¨ÒåtaskµÄ»ù±¾ÔªËØ
+> ©¦   ©À©¤©¤ main.yml
+> ©¦   ©À©¤©¤ plugins.yml
+> ©¦   ©À©¤©¤ settings.yml
+> ©¦   ©À©¤©¤ setup-Debian.yml
+> ©¦   ©¸©¤©¤ setup-RedHat.yml
+> ©À©¤©¤ templates		#´æ·ÅÄ£°åÎÄ¼þ
+> ©¦   ©À©¤©¤ basic-security.groovy.j2
+> ©¦   ©¸©¤©¤ proxy.xml
+> ©À©¤©¤ tests
+> ©¦   ©¸©¤©¤ test-plugins.yml
+> ©¸©¤©¤ vars			#ÖÁÉÙÓÐÒ»¸ömain.yml£¬ÆäËûÎÄ¼þÍ¨¹ýinclude°üº¬,¶¨Òå±äÁ¿µÄÄ¿Â¼
+>  ©À©¤©¤ Debian.yml
+>  ©¸©¤©¤ RedHat.yml
+> 
+> ```
+>
 
 ### ÆäËûÏµÍ³ÉèÖÃ
 
