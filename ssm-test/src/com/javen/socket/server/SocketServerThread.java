@@ -3,7 +3,7 @@ package com.javen.socket.server;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class SocketServer {
+public class SocketServerThread {
     public static void main(String[] args) throws Exception {
         ServerSocket serverSocket = new ServerSocket(8082);
         while (true) {
@@ -11,7 +11,16 @@ public class SocketServer {
             //阻塞方法
             Socket socket = serverSocket.accept();
             System.out.println("有客户端连接了");
-            handler(socket);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        handler(socket);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
 
         }
     }
