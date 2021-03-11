@@ -37,4 +37,4 @@
 
 <img src="./resources/minio2.png" style="zoom:150%;" />
 
-![](./resources/minio3.png)
+![image-20210311091254634](./resources/minio3.png)
