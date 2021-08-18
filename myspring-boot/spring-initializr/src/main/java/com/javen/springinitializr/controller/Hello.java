@@ -11,7 +11,7 @@ public class Hello {
 
     @GetMapping(value = "/hello/{name}", produces = "application/json")
     public String sayHello(@PathVariable("name") String name1) {
-        return "hello " + name1 + " " + address;
+        return "hello devtools " + name1 + " " + address;
     }
 
     public Hello() {
