@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javen.es.dto.User;
 import org.apache.http.HttpHost;
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.update.UpdateRequest;
@@ -46,6 +48,14 @@ public class DocumentOperation {
         updateRequest.doc(XContentType.JSON, "name", "yumeiren");
         UpdateResponse updateResponse = client.update(updateRequest, RequestOptions.DEFAULT);
         System.out.println(updateResponse.status());
+
+        //3、查询文档
+        GetRequest getRequest = new GetRequest();
+        getRequest.index("user").id("1");
+        GetResponse documentFields = client.get(getRequest, RequestOptions.DEFAULT);
+        System.out.println(documentFields.getSourceAsString());
+
+        //4、删除文档
 
         client.close();
     }
