@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javen.es.dto.User;
 import org.apache.http.HttpHost;
+import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -56,6 +58,9 @@ public class DocumentOperation {
         System.out.println(documentFields.getSourceAsString());
 
         //4、删除文档
+        DeleteRequest deleteRequest = new DeleteRequest("user", "1");
+        DeleteResponse deleteResponse = client.delete(deleteRequest, RequestOptions.DEFAULT);
+        System.out.println(deleteResponse.status());
 
         client.close();
     }
